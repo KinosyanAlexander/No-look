@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block body_content %}
+
+<style>
+    .down-button-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        margin: auto auto
+    }
+</style>
+
+<div class='down-button-container'>
+    <p class='display-1'>Try To Download Album</p>
+    <h6>Really, after 30 - 100 sec by clickig this button you can download zip album.</h6>
+    <a href={{url_for('download_button')}} class='btn btn-primary download-button'>Try to Download</a>
+</div>
+
+
+
+{% endblock %}

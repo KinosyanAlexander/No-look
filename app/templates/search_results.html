@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+
+    .title-results {
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .res-grid-container {
+        display: grid;
+        /* grid-template-columns: repeat(4, 1fr); */
+        margin: 0 5%;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2em 2em;
+        /* border: 5px solid black; */
+        grid-template-rows: repeat({{col//4}}, 1fr);
+        /* grid-template-areas: '. . . .' */
+        grid-template-areas: {% for i in range(col//4) %}". . . ."{% endfor %};
+        margin-bottom: 25px;
+        }
+
+
+    .music-block {
+            /* grid-area: mb; */
+            
+            display: grid;
+            /* border: 5px solid indianred; */
+            grid-template-rows: 1fr auto;
+            grid-template-columns: 100%;
+            /* row-gap: 5px; */
+            /* grid-template-areas: '. . . .' */
+            grid-template-areas: "." ".";
+            background-color: #181818;
+
+        }
+
+    .card-text{
+        color: yellow;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+
+    .res-body {
+        display: flex;
+        flex: 0 1 auto;
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
+        /* border: 1px solid maroon; */
+        width: 90%;
+        height: 100%;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-bottom: 7px;
+        margin: 0 5%
+    }
+
+    .result-img {
+        /* margin: 5% 5% 2% 5%; */
+        margin: 5%;
+        /* border: 1px solid khaki; */
+    }
+
+    .artist-img {
+        border-radius: 50%;
+        margin: 5% auto;
+        /* padding: 3% 3% 5% 3%; */
+    }
+
+    @media (max-width: 600px) {
+        .res-grid-container {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat({{col}}, 1fr);
+            grid-template-areas: {% for i in range(col) %}"."{% endfor %};
+            margin-bottom: 25px;
+        }
+
+        .music-block {
+            margin: 0 20%;
+        }
+</style>
+
+{% if results %}
+<div class="title-results"><p class='display-1'>{{results[0].type.title() + 's' }}</p></div>
+{% else %}
+<div class="title-results"><p class='display-1'>No matches found(</p></div>
+{%endif%}
+
+<div class='res-grid-container'>
+    {% for result in results %}
+    <div class='music-block shadow-lg rounded'>
+        {% if result.type == 'track' or result.type == 'album'%}
+        <div class='album-img result-img'>
+            <img src={{result.image}} alt='Нет картинки(' class="dede" width="100%">
+        </div>
+        {% else %}
+        <div class='artist-img result-img'>
+            <img src={{result.image}} alt='Нет картинки(' class="dede artist-img">
+        </div>
+        {% endif %}
+
+
+        <div class='res-body'>
+            <div class='card-el'>
+                <h4 class="card-title card-text">{{ result.title }}</h4>
+            </div>
+
+            {% if 'artists' in dir(result) %}
+            <div class="artists card-el"><p class='artists-text card-text'>{{ ', '.join(result.artists[:2]) }}</p></div>
+            {% endif %}
+            <div class="genre card-el"><p class='card-text genre-text'>{{ ', '.join(result.genre) }}</p></div>
+            {% if 'year' in dir(result) %}
+            <div class="year card-el"><p class='card-text year-text'>{{ result.year }}</p></div>
+            {% endif %}
+            <div class='download-button card-el'>
+                <a href="/download-mp3/{{result.type}}/{{result.id}}" class="btn btn-warning card-el">
+                {% if result.type == 'album' %}
+                Скачать zip
+                {% elif result.type == 'track' %}
+                Скачать mp3
+                {% else %}
+                Не нада нажимать)
+                {% endif %}
+                <!-- <img src="https://s1.iconbird.com/ico/0612/GooglePlusInterfaceIcons/w128h1281338911337download2.png" align="right" height="30px" width="30px"> -->
+                </a>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+    {% endfor %}
+</div>
+{% endblock %}

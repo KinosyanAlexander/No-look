@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .feature-list-container{
+        width: 80%;
+        margin: 20px auto 50px auto
+    }
+
+    .header-like {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<div class='header-like'>
+    <p class='display-1'> Download Music For Free!</p>
+</div>
+
+<div class='header-like'>
+    <p class='display-2'>
+        You can:
+    </p>
+</div>
+
+<div class='feature-list-container'>
+
+    <ul class="list-group feature-list">
+        <li class="list-group-item"><p class='display-4'>Search Tracks, Albums, Artists</p></li>
+        <li class="list-group-item"><p class='display-4'>Download full-complected mp3 tracks</p></li>
+        <li class="list-group-item"><p class='display-4'>Download Albums in zip-format</p></li>
+        <li class="list-group-item"><p class='display-4'>And Have Fun)</p></li>
+    </ul>
+</div>
+
+
+<div class='header-like'>
+<p class='display-3'>Good luck!</p>
+</div>
+{% endblock %}

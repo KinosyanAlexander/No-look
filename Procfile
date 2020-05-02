@@ -1,0 +1,1 @@
+web: gunicorn cite:app --no-sendfile
